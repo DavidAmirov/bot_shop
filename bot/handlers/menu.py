@@ -3,7 +3,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQu
 
 from create_bot import bot, dp
 
-MAIN_MENU = ["Каталог", "Корзина", "FAQ"]
+MAIN_MENU = ["Каталог", "Корзина"]
 
 
 async def cmd_start(message: types.Message):
@@ -16,6 +16,7 @@ async def cmd_start(message: types.Message):
 async def process_category(message: types.Message):
     await bot.send_message(
         message.from_user.id, f'Пожалуйста, выберите категорию')
+
 
 
 
