@@ -36,7 +36,7 @@ class Cart(models.Model):
 
 
 class Subscriber(models.Model):
-    chat_id = models.IntegerField(unique=True)
+    chat_id = models.BigIntegerField(unique=True)
     username = models.CharField(max_length=50)
     phone = models.CharField(max_length=25)
     adress = models.CharField(max_length=200)
