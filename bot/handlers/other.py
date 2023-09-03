@@ -10,7 +10,7 @@ async def cancel_handler(callback: CallbackQuery, state: FSMContext):
     markup = ReplyKeyboardMarkup(resize_keyboard=True)
     markup.add("Каталог").add('Корзина')
     
-    await callback.message.reply('Отменено.', reply_markup=markup)
+    await callback.message.reply('Отменено. Продукты сохранены в корзине.', reply_markup=markup)
 
 
 def register_other_handlers(dp: Dispatcher):

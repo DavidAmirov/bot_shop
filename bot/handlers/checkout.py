@@ -4,7 +4,7 @@ from aiogram.dispatcher.filters import Text
 from aiogram.types import CallbackQuery, Message, InlineKeyboardMarkup, InlineKeyboardButton
 
 from create_bot import bot
-from utils import save_subscriber
+from utils import save_subscriber, delete_all_cart_items
 from states.client_states import CheckoutState
 
 
@@ -63,13 +63,18 @@ async def checkout_adress(message: Message, state: FSMContext):
     ikb = InlineKeyboardMarkup(resize_keyboard=True)
     ikb.add(InlineKeyboardButton(
         'Заказать',
-        callback_data='nnn'
+        callback_data=f'process_order:{message.from_user.id}'
+    ))
+    ikb.add(InlineKeyboardButton(
+        'Отменить',
+        callback_data='cancel_chekout_processing:'
     ))
     await bot.send_message(
         message.from_user.id,
-        'Оплата принимается только наличными.',
+        f'Ваш данные приняты: {name}, {adress}, {phone}',
         reply_markup=ikb
     )
+
     await state.finish()
 
 

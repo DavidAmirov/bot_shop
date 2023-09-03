@@ -12,7 +12,12 @@ async def cmd_start(message: types.Message):
     markup = ReplyKeyboardMarkup(resize_keyboard=True)
     for item in MAIN_MENU:
         markup.add(item)
-    await bot.send_message(chat_id=message.chat.id, text="Добро пожаловать!", reply_markup=markup)
+    text = 'Добро пожаловать в наш бот, который поможет вам сделать покупки в любое время суток.'
+    text += 'Для этого просто выберите продуткы с каталога(при нажатии на цену добавляется один продукт в корзину),'
+    text += ' перейдите в корзину, убедитесь что количество товара указано верно,'
+    text += ' укажите свои данные и ожидайте свой заказ.'
+    text += ' Техподдержка: @Dtalish'
+    await bot.send_message(chat_id=message.chat.id, text=text, reply_markup=markup)
 
 
 async def process_category(message: types.Message):
@@ -20,7 +25,7 @@ async def process_category(message: types.Message):
     for cat in get_categories():
         name = cat['name']
         category_id = cat['id']
-        ikb.add(InlineKeyboardButton(text=name, callback_data=f'category_id:{category_id}'))
+        ikb.insert(InlineKeyboardButton(text=name, callback_data=f'category_id:{category_id}'))
     await bot.send_message(
         message.from_user.id, f'Пожалуйста, выберите категорию', reply_markup=ikb
     )
@@ -33,7 +38,7 @@ async def process_subcategory(callback: CallbackQuery):
     for subcat in get_subcategories(category_id):
         name = subcat['name']
         subcategory_id = subcat['id']
-        ikb.add(InlineKeyboardButton(text=name, callback_data=f'subcat_id:{subcategory_id}'))
+        ikb.insert(InlineKeyboardButton(text=name, callback_data=f'subcat_id:{subcategory_id}'))
     await bot.send_message(
         callback.from_user.id, f'Выберите подкатегорию', reply_markup=ikb
     )

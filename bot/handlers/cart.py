@@ -20,11 +20,11 @@ async def process_cart(message: types.Message):
 
             ikb = InlineKeyboardMarkup(resize_keyboard=True)
 
-            ikb.add(InlineKeyboardButton(
+            ikb.row(InlineKeyboardButton(
                 f'Кол-во:{quantity}    ➕',
                 callback_data=f'increase:{message.from_user.id}:{cart_id}:{name}:{price}'
-            ))
-            ikb.add(InlineKeyboardButton(
+            ),
+            InlineKeyboardButton(
                 f'Кол-во:{quantity}     ➖',
                 callback_data=f'decrease:{message.from_user.id}:{cart_id}:{name}:{price}'
             ))
@@ -56,11 +56,11 @@ async def change_quantity(callback: types.CallbackQuery):
     else:
         ikb = InlineKeyboardMarkup(resize_keyboard=True)
 
-        ikb.add(InlineKeyboardButton(
+        ikb.row(InlineKeyboardButton(
             f'Кол-во:{quantity}     ➕',
             callback_data=f'increase:{callback.from_user.id}:{cart_id}:{name}:{price}'
-        ))
-        ikb.add(InlineKeyboardButton(
+        ),
+        InlineKeyboardButton(
             f'Кол-во:{quantity}     ➖',
             callback_data=f'decrease:{callback.from_user.id}:{cart_id}:{name}:{price}'
         ))
@@ -73,7 +73,7 @@ async def change_quantity(callback: types.CallbackQuery):
 
 async def confirm_checkout(message: types.Message):
     cart_products = get_cart_by_user(message.from_user.id)
-    text = 'Давайте проверим содержимое корзины:\n'
+    text = 'Ваш заказ:\n'
     total_amount = 0
     for product in cart_products:
         product_amount = product['quantity'] * product['price']
