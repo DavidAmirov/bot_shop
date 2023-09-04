@@ -10,7 +10,7 @@ async def process_cart(message: types.Message):
     user_cart = get_cart_by_user(message.from_user.id)
 
     if len(user_cart) < 1:
-        await message.answer('Ваша карзина пуста.')
+        await message.answer('Ваша корзина пуста.')
     else:
         for product in user_cart:
             name = product['name']

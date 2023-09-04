@@ -3,7 +3,7 @@ from aiogram.dispatcher.filters import Text
 from aiogram.types import CallbackQuery
 
 from create_bot import bot, dp
-from utils import delete_all_cart_items, get_cart_by_user, get_subscriber
+from utils import delete_all_cart_items, get_cart_by_user, get_subscriber, save_order_to_excel
 
 async def successful_order(callback: CallbackQuery):
     user_id = callback.data.split(':')[1]
@@ -30,12 +30,8 @@ async def successful_order(callback: CallbackQuery):
         394131423,
         f'{adress}, {phone}, {username}\n{text}'
     )
+    save_order_to_excel(username, phone, adress, total_amount)
     delete_all_cart_items(user_id)
-
-
-    
-
-    
 
 
 def register_order_handler(dp: Dispatcher):

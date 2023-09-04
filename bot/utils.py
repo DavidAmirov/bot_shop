@@ -2,6 +2,8 @@ import os
 
 import psycopg2
 
+from datetime import date
+
 from dotenv import load_dotenv
 
 from openpyxl import Workbook
@@ -204,7 +206,6 @@ def delete_all_cart_items(user_id):
         conn.commit()
         cursor.close()
         conn.close()
-        print('Все товары из корзины пользователя удалены.')
     except Exception as e:
         print('Ошибка при удалении всех товаров из корзины пользователя.')
 
@@ -270,4 +271,28 @@ def get_subscribers():
     finally:
         cursor.close()
         conn.close()
+
+
+def save_order_to_excel(username, phone, adress, total_amount):
+    try:
+        workbook = load_workbook(f'C:/Dev/bot_shop/orders/' + f'{date.today()}.xlsx')
+    except FileNotFoundError:
+        workbook = Workbook()
+
+    sheet = workbook.active
+    if sheet['A1'].value is None:
+        sheet['A1'] = 'Имя пользователя'
+        sheet['B1'] = 'Контактный телефон'
+        sheet['C1'] = 'Адрес'
+        sheet['D1'] = 'Сумма заказа'
+    
+    row_num = sheet.max_row + 1
+    sheet[f'A{row_num}'] = username
+    sheet[f'B{row_num}'] = phone
+    sheet[f'C{row_num}'] = adress
+    sheet[f'D{row_num}'] = total_amount
+    sheet['F7'].value = f'=SUM(D2:D{row_num})'
+
+
+    workbook.save(f'C:/Dev/bot_shop/orders/' + f'{date.today()}.xlsx')
 
