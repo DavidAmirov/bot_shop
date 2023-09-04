@@ -291,7 +291,7 @@ def save_order_to_excel(username, phone, adress, total_amount):
     sheet[f'B{row_num}'] = phone
     sheet[f'C{row_num}'] = adress
     sheet[f'D{row_num}'] = total_amount
-    sheet['F7'].value = f'=SUM(D2:D{row_num})'
+    sheet['F1'].value = f'=SUM(D2:D{row_num})'
 
 
     workbook.save(f'C:/Dev/bot_shop/orders/' + f'{date.today()}.xlsx')
