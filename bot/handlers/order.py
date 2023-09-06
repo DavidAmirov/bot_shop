@@ -1,6 +1,6 @@
 from aiogram import types, Dispatcher
 from aiogram.dispatcher.filters import Text
-from aiogram.types import CallbackQuery
+from aiogram.types import CallbackQuery, ReplyKeyboardMarkup
 
 from create_bot import bot, dp
 from utils import delete_all_cart_items, get_cart_by_user, get_subscriber, save_order_to_excel
@@ -20,11 +20,13 @@ async def successful_order(callback: CallbackQuery):
     
     text += f'Общая сумма к оплате: {total_amount}\n'
     text += 'Техподдержка: @Dtalish'
-
+    markup = ReplyKeyboardMarkup(resize_keyboard=True, is_persistent=True)
+    markup.add('Каталог').add('Корзина')
     await bot.send_message(
         user_id,
         f'{username}, ваш заказ успешно принят.\nОжидайте заказ по адресу {adress}\n'
-        f'{text}'
+        f'{text}',
+    reply_markup=markup
     )
     await bot.send_message(
         394131423,

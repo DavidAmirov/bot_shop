@@ -275,11 +275,19 @@ def get_subscribers():
 
 def save_order_to_excel(username, phone, adress, total_amount):
     try:
-        workbook = load_workbook(f'C:/Dev/bot_shop/orders/' + f'{date.today()}.xlsx')
+        workbook = load_workbook(f'C:/Dev/bot_shop/orders/' + f'{date.today().strftime("%m-%y")}.xlsx')
     except FileNotFoundError:
         workbook = Workbook()
+    data_today = date.today().strftime("%m-%d-%y")
+    if 'Sheet' in workbook.sheetnames:
+        workbook.remove(workbook['Sheet'])
+        workbook.create_sheet(f'{data_today}')
+    sheet = workbook[f'{data_today}']
+    if sheet.title != f'{data_today}':
+        workbook.create_sheet(f'{data_today}')
+        sheet = workbook[f'{data_today}']
 
-    sheet = workbook.active
+
     if sheet['A1'].value is None:
         sheet['A1'] = 'Имя пользователя'
         sheet['B1'] = 'Контактный телефон'
@@ -294,5 +302,4 @@ def save_order_to_excel(username, phone, adress, total_amount):
     sheet['F1'].value = f'=SUM(D2:D{row_num})'
 
 
-    workbook.save(f'C:/Dev/bot_shop/orders/' + f'{date.today()}.xlsx')
-
+    workbook.save(f'C:/Dev/bot_shop/orders/' + f'{date.today().strftime("%m-%y")}.xlsx')
