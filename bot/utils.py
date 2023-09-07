@@ -282,10 +282,9 @@ def save_order_to_excel(username, phone, adress, total_amount):
     if 'Sheet' in workbook.sheetnames:
         workbook.remove(workbook['Sheet'])
         workbook.create_sheet(f'{data_today}')
-    sheet = workbook[f'{data_today}']
-    if sheet.title != f'{data_today}':
+    if f'{data_today}' not in workbook.sheetnames:
         workbook.create_sheet(f'{data_today}')
-        sheet = workbook[f'{data_today}']
+    sheet = workbook[f'{data_today}']
 
 
     if sheet['A1'].value is None:
